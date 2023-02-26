@@ -57,8 +57,8 @@ jobs:
           sudo apt-get install -y apt-transport-https ca-certificates gnupg
           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
           echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update && sudo apt-get install -y google-cloud-sdk google-cloud-sdk-gke kubectl
-          gcloud container clusters get-credentials "${{ env.cluster_name }}" --region  "${{ env.region }}"
+          sudo apt-get update && sudo apt-get install -y google-cloud-sdk kubectl
+          gcloud container clusters get-credentials "project-cluster" --region  "us-central1"
           kubectl get nodes
           
           

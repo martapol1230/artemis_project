@@ -52,7 +52,8 @@ jobs:
           
       - name: Update Google Cloud SDK
         run: |
-          gcloud components update    
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-cloud-sdk  
 
       - name: Check Out Helm Repo
         run: |

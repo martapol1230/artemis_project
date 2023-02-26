@@ -68,6 +68,12 @@ jobs:
           /tmp/google-cloud-sdk/bin/gcloud -q components install alpha
           /tmp/google-cloud-sdk/bin/gcloud -q components install beta
           /tmp/google-cloud-sdk/bin/gcloud -q components install gke-gcloud-auth-plugin
+          
+          
+      - name: Update collections module
+        run: |
+          pip install -U collections
+   
     
         
 

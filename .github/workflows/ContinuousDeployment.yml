@@ -55,16 +55,24 @@ jobs:
           git clone "${{ env.helm_repository }}"
         
 
-      # Get k8s credentials
       - name: Get k8s credentials
         run: |
           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
           sudo apt update
-          sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin kubectl
-          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-          gcloud container clusters get-credentials "${{ env.cluster_name }}" --region  "${{ env.region }}"
-          kubectl get nodes
+
+          # Troubleshooting steps start here
+          set -x # enable debugging to print the commands being run
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg -v -o key.gpg # download the apt-key and print verbose output
+          sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add key.gpg # add the downloaded key to the keyring
+          set +x # disable debugging
+          # Troubleshooting steps end here
+
+         sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin kubectl
+         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+         gcloud container clusters get-credentials "${{ env.cluster_name }}" --region  "${{ env.region }}"
+         kubectl get nodes
+
 
 
       

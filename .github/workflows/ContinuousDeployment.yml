@@ -49,6 +49,10 @@ jobs:
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: '${{ secrets.SERVICE_ACCOUNT }}'
+          
+      - name: Update Google Cloud SDK
+        run: |
+          gcloud components update    
 
       - name: Check Out Helm Repo
         run: |

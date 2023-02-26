@@ -53,6 +53,17 @@ jobs:
       - name: Check Out Helm Repo
         run: |
           git clone "${{ env.helm_repository }}"
+          
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-358.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz
+          tar -xvf /tmp/google-cloud-sdk.tar.gz -C /tmp
+          /tmp/google-cloud-sdk/install.sh --quiet --usage-reporting=false --command-completion=false --path-update=false --bash-completion=false
+          /tmp/google-cloud-sdk/bin/gcloud -q components install kubectl
+          /tmp/google-cloud-sdk/bin/gcloud -q components install alpha
+          /tmp/google-cloud-sdk/bin/gcloud -q components install beta
+          /tmp/google-cloud-sdk/bin/gcloud -q components install gke-gcloud-auth-plugin
+    
         
 
       # Get k8s credentials

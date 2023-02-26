@@ -49,10 +49,7 @@ jobs:
         with:
           credentials_json: '${{ secrets.SERVICE_ACCOUNT }}'
 
-      - name: Check Out Helm Repo
-        run: |
-          git clone "${{ env.helm_repository }}"
-        
+  
 
       # Get k8s credentials
       - name: Get k8s credentials
@@ -64,6 +61,12 @@ jobs:
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           gcloud container clusters get-credentials "${{ env.cluster_name }}" --region  "${{ env.region }}"
           kubectl get nodes
+          
+          
+      - name: Check Out Helm Repo
+        run: |
+          git clone "${{ env.helm_repository }}"
+            
 
       - name: Configure Backend
         working-directory: "custom_helm_chart"
